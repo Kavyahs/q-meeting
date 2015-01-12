@@ -123,7 +123,6 @@ class User < ActiveRecord::Base
     if response["success"]
       # Checking if we already have this user in our database
       user = User.where(q_auth_uid: response["data"]["id"]).first || User.new(q_auth_uid: response["data"]["id"])
-      binding.pry
       user.name = response["data"]["name"]
       user.username = response["data"]["username"]
       user.email = response["data"]["email"]
