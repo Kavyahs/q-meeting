@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   rolify
 
   # Associations
-  belongs_to :client
+  #belongs_to :client
 
   def self.find_by_email_or_username(query)
     self.where("LOWER(email) = LOWER('#{query}') OR LOWER(username) = LOWER('#{query}')").first
@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
   end
 
   def token_expired?
-    return self.token_expires_at.nil? || (Time.now > self.token_expires_at + ConfigCenter::Defaults::SESSION_TIME_OUT)
+    return self.token_created_at.nil? || (Time.now > self.token_created_at + ConfigCenter::Defaults::SESSION_TIME_OUT)
   end
 
   def self.create_session(auth_token)
@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
       user.state = response["data"]["state"]
       user.country = response["data"]["country"]
       user.auth_token = response["data"]["auth_token"]
-      user.token_expires_at = (Time.now + 1.day)
+      user.token_created_at = response["data"]["token_created_at"]
       user.user_type = response["data"]["user_type"]
 
       user.thumb_url = response["data"].try(:[],"profile_image").try(:[],"thumb")

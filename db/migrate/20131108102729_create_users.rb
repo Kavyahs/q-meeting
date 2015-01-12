@@ -2,7 +2,6 @@ class CreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
 
-      ## First Name, Last Name and Username
       t.string :name, limit: 255
       t.string :username, :null => false, :limit=>32
       t.string :email, :null => false
@@ -30,8 +29,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :q_auth_uid
       t.string :auth_token
       t.string :user_type
-
-      t.references :client
+      t.datetime :token_created_at
 
       t.timestamps
     end
