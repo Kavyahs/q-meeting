@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :user do
+    get  '/my_bookings', to: "my_bookings#index", as:  :my_bookings
+  end
   ## ----------
   ## APIs
   ## ----------
