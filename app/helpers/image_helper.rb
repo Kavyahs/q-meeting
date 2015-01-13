@@ -11,12 +11,11 @@ module ImageHelper
   # image_url(user, "profile_picture.image.large.url")
   # image_url(user, "profile_picture.image.large.url", {width: 40, height: 10})
   # Where as the hash contains width and height for the place holder incase if the object doesn't has the image object
-  def image_url(object, eval_url, place_holder={})
+  def image_url(object, assoc_name, place_holder={})
     begin
-      url = object.send :eval, eval_url
+      url = object.send :eval, assoc_name
       raise if url.blank?
     rescue
-      #binding.pry
       url = place_holder[:url] ? place_holder[:url] : "http://placehold.it/#{place_holder[:width]}x#{place_holder[:height]}&text=#{place_holder[:text]}"
     end
     return url
@@ -31,7 +30,7 @@ module ImageHelper
   # display_image(client, "logo.image.url",
   #                       width: "100%", height:"100%",
   #                       place_holder: {width: 100, height: 50, text: "<No Image>"})
-  def display_image(object, eval_url, hsh={})
+  def display_image(object, assoc_name, hsh={})
     hsh[:width] = "100%" unless hsh[:width]
     hsh[:height] = "auto" unless hsh[:height]
 
@@ -43,7 +42,7 @@ module ImageHelper
 
     hsh[:style] = "" unless hsh[:style]
     hsh[:class] = "" unless hsh[:class]
-    img_url = image_url(object, eval_url, ph)
+    img_url = image_url(object, assoc_name, ph)
     return image_tag img_url, class: hsh[:class], style: "width:#{hsh[:width]};height:#{hsh[:height]};#{hsh[:style]}"
   end
 
@@ -77,10 +76,8 @@ module ImageHelper
   #   => "/admin/images/new" OR
   #   => "/admin/images/1/edit"
   def upload_image_link(object, redirect_url, assoc_name=:photo)
-
     photo_object = nil
     photo_object =  object.send(assoc_name) if object.respond_to?(assoc_name)
-    #binding.pry
     if photo_object.present?
       edit_admin_image_path(photo_object,
                                  :redirect_url => redirect_url,
@@ -88,11 +85,13 @@ module ImageHelper
                                  :imageable_type => object.class.to_s,
                                  :image_type => photo_object.class.name)
     else
-      photo_object = object.send("build_#{assoc_name}")
-      new_admin_image_path(:redirect_url => redirect_url,
-                                 :imageable_id => object.id,
-                                 :imageable_type => object.class.to_s,
-                                 :image_type => photo_object.class.name)
+      if object.respond_to?("build_#{assoc_name}")
+        photo_object = object.send("build_#{assoc_name}")
+        new_admin_image_path(:redirect_url => redirect_url,
+                                   :imageable_id => object.id,
+                                   :imageable_type => object.class.to_s,
+                                   :image_type => photo_object.class.name)
+      end
     end
   end
 

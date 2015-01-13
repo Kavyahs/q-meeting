@@ -19,7 +19,7 @@
 				<%= link_to raw("<i class=\"fa fa-dashboard\"></i> Dashboard"), user_dashboard_path %>
 			</li>
 			<li class="<%= nav_class("user/my_bookings") %>">
-				<%= link_to raw("<i class=\"fa fa-globe\"></i> My Booking"),  user_my_bookings_path %>
+				<%= link_to raw("<i class=\"fa fa-globe\"></i> My Bookings"),  user_bookings_path %>
 			</li>
 
 			<% if @current_user.is_admin? %>

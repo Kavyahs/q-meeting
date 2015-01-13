@@ -1,0 +1,25 @@
+<% if @booking.errors.blank? %>
+
+	// Fill the right box with first booking details
+	$('#div_booking_details').html("<%= escape_javascript(render(:partial=>'show')) %>");
+
+	// Add the newly created item to the list
+  $("#div_booking_collections").prepend("<div id=\"div_booking_<%= @booking.id %>\"><%= escape_javascript(render(:partial => 'item', :locals => { :booking => @booking })) %></div>")
+  $("#div_booking_empty").hide();
+
+  // Close Modal
+  closeModal();
+
+<% else %>
+
+  // Show the new form in the pop up form.
+  heading = "Create Booking";
+  bodyContent = "<%= escape_javascript(render(:partial=>"form")) %>";
+  showModal(heading, bodyContent);
+  validateBookingForm();
+
+  // Populate Server Side Errors
+  errorMessages = <%= @booking.errors.full_messages.to_json.html_safe %>;
+  populateServerSideErrors('booking', errorMessages);
+
+<% end %>
