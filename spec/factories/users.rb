@@ -28,9 +28,7 @@ FactoryGirl.define do
     department "department"
     designation "designation"
 
-    sequence :auth_token do |n|
-      "auth_token_{n}"
-    end
+    auth_token {SecureRandom.hex}
 
     token_created_at { Time.now }
 

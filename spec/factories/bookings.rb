@@ -5,6 +5,7 @@ FactoryGirl.define do
     date Date.today()
     from {Time.now + 300.minutes}
     to {Time.now + 360.minutes}
+    user
     venue
   end
 end

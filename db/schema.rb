@@ -22,11 +22,13 @@ ActiveRecord::Schema.define(version: 20150112122819) do
     t.date     "date"
     t.time     "from"
     t.time     "to"
+    t.integer  "user_id"
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "bookings", ["user_id"], name: "index_bookings_on_user_id", using: :btree
   add_index "bookings", ["venue_id"], name: "index_bookings_on_venue_id", using: :btree
 
   create_table "images", force: true do |t|

@@ -1,4 +1,4 @@
-class Image::MeetingRoomLogo < Image::Base
+class Image::VenueLogo < Image::Base
 
 
 

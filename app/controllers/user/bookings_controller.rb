@@ -45,7 +45,7 @@ class User::BookingsController < User::BaseController
   # POST /bookings
   def create
     ## Creating the booking object
-    @booking = Booking.new(params[:booking].permit(:title, :responsibilities))
+    @booking = Booking.new(booking_params)
 
     ## Validating the data
     @booking.valid?
@@ -85,7 +85,7 @@ class User::BookingsController < User::BaseController
     @booking = Booking.find(params[:id])
 
     ## Updating the @booking object with params
-    @booking.assign_attributes(params[:booking].permit(:title, :responsibilities))
+    @booking.assign_attributes(booking_params)
 
     ## Validating the data
     @booking.valid?
@@ -155,6 +155,10 @@ class User::BookingsController < User::BaseController
 
   def set_navs
     set_nav("user/bookings")
+  end
+
+  def booking_params
+    params[:booking].permit(:title, :description, :date, :from, :to, :venue_id)
   end
 
   def get_collections

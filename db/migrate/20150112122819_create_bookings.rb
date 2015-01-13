@@ -6,6 +6,7 @@ class CreateBookings < ActiveRecord::Migration
       t.date :date
       t.time :from
       t.time :to
+      t.references :user, index: true
       t.references :venue, index: true
       t.timestamps
     end
