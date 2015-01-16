@@ -1,0 +1,94 @@
+
+<%# Renders a partial which is used to create a new booking %>
+
+<%= form_for([:user, @booking], :html => {:id=>"form_booking", :class=>"mb-0 form-horizontal", :role => "form", :method => (@booking.new_record? ? :post : :put), :remote=>true}) do |f| %>
+
+  <div class="modal-body">
+
+    <%= @booking.errors[:base].to_sentence %>
+
+    <%= hidden_field_tag :faction, @booking.new_record? ? user_bookings_path : user_bookings_path(@booking) %>
+    <%= hidden_field_tag :fmethod, @booking.new_record? ? "POST" : "PUT" %>
+
+    <div class="form-inputs">
+
+
+      <!-- Title (string) -->
+      <%= render :partial=>"layouts/common/field", :locals=>{:object=>@booking,
+                                              :object_name=>'booking',
+                                              :field_name=>'title',
+                                              :display_name=>'Title',
+                                              :field_type=>'string',
+                                              :input_type=>'text',
+                                              :required=>true,
+                                              :place_holder=>"e.g: Sprint Planning Meeting"} %>
+
+      <!-- Responsibilities (text) -->
+      <%= render :partial=>"layouts/common/field", :locals=>{:object=>@booking,
+                                              :object_name=>'booking',
+                                              :field_name=>'description',
+                                              :display_name=>'Description',
+                                              :field_type=>'text',
+                                              :input_type=>'textarea',
+                                              :required=>false} %>
+
+       <div id="date">
+      <%= render :partial=>"layouts/common/field", :locals=>{:object=>@booking,
+                                              :object_name=>'booking',
+                                              :field_name=>'date',
+                                              :display_name=>'Date',
+                                              :field_type=>'date',
+                                              :input_type=>'date',
+                                              :required=>true,
+                                              :place_holder=>"e.g: 01-01-2015"} %>
+      </div>
+
+      <%= render :partial=>"layouts/common/field", :locals=>{:object=>@booking,
+                                              :object_name=>'booking',
+                                              :field_name=>'from',
+                                              :display_name=>'Time From',
+                                              :field_type=>'time',
+                                              :input_type=>'time',
+                                              :required=>true,
+                                              :place_holder=>"e.g: 09:00am"} %>
+
+
+      <%= render :partial=>"layouts/common/field", :locals=>{:object=>@booking,
+                                              :object_name=>'booking',
+                                              :field_name=>'to',
+                                              :display_name=>'To',
+                                              :field_type=>'time',
+                                              :input_type=>'time',
+                                              :required=>true,
+                                              :place_holder=>"e.g: 06:00am"} %>
+
+
+
+<div style="text-align: center;">
+<%= f.label :Venue %>
+<%= collection_select :booking, :venue_id, Venue.all, :id, :name %> 
+</div>
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+
+    <div class="pull-right">
+      <% button_text = "#{@booking.new_record? ? "Book" : "Update"} " %>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      <%= submit_tag button_text, "data-reset-text"=>button_text, "data-loading-text"=>"Saving ...", :class=>"btn btn-primary ml-10" %>
+    </div>
+
+  </div>
+
+	<div class="cl-10"></div>
+
+<% end %>
+

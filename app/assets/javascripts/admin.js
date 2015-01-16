@@ -47,7 +47,6 @@
 // require theme/nvd3/src/models/pieChart
 // require theme/nvd3/src/utils
 // require theme/nvd3/sample.nvd3
-//
 // Map and icons on map
 //
 // require https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false
@@ -66,6 +65,7 @@
 // For jQery validations - http://jqueryvalidation.org/documentation/
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require newbooking
 // 
 // include validation init functions
 //= require_tree ./validations

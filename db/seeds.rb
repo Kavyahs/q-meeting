@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Venue.create(:name => "Mysore")
+Venue.create(:name => "Denver")
+Venue.create(:name => "CostaRica")
+Venue.create(:name => "Dubai")
